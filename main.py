@@ -9,4 +9,17 @@ if __name__ == "__main__":
         sys.exit(1)
 
     g, h, p = int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3])
-    pohlig_hellman(g, h, p, verbose=True)
+
+    h_mod = h % p
+
+    if h_mod == 0:
+        print("h = 0: решений нет")
+        sys.exit(1)
+    elif h_mod == 1:
+        print("h = 1: x = 0 (g^0 = 1)")
+        sys.exit(1)
+    elif h_mod == p - 1:
+        print(f"h = -1 = {p - 1}: тривиальный случай")
+        sys.exit(1)
+
+    pohlig_hellman(g, h, p, verbose=False)

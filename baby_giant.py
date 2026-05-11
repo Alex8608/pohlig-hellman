@@ -39,7 +39,7 @@ def bsgs(g, h, p, n, verbose=False):
     # giant steps
     g_inv_m = pow(mod_inv(g, p), m, p)
     cur = h % p
-    for i in range(m + 1):
+    for i in range(m):
         if cur in table:
             x = (i * m + table[cur]) % n
             if verbose:

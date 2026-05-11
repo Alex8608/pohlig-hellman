@@ -22,10 +22,16 @@ def factorize(n):
         res[n] = 1
     return res
 
-def element_order(g, p):
-    n = p - 1
-    factors = factorize(n)
-    ord_g = n
+def euler_phi(n):
+    n_factors = factorize(n)
+    result = n
+    for p in n_factors:
+        result -= result // p
+    phi_factors = factorize(result)
+    return result, phi_factors
+
+def element_order(g, phi, factors, p):
+    ord_g = phi
     for q in factors:
         while ord_g % q == 0 and pow(g, ord_g // q, p) == 1:
             ord_g //= q
