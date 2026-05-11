@@ -1,6 +1,6 @@
 import sys
 from pohlig_hellman import pohlig_hellman
-
+from utils import euler_phi, element_order
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
@@ -14,12 +14,17 @@ if __name__ == "__main__":
 
     if h_mod == 0:
         print("h = 0: решений нет")
-        sys.exit(1)
+        sys.exit(0)
     elif h_mod == 1:
         print("h = 1: x = 0 (g^0 = 1)")
-        sys.exit(1)
+        sys.exit(0)
     elif h_mod == p - 1:
-        print(f"h = -1 = {p - 1}: тривиальный случай")
-        sys.exit(1)
+        phi, phi_factors = euler_phi(p)
+        n = element_order(g, phi, phi_factors, p)
+        if n % 2 == 0:
+            print(f"h = -1: x = {n // 2}")
+        else:
+            print("h = -1: решений нет (порядок g нечётный)")
+        sys.exit(0)
 
     pohlig_hellman(g, h, p, verbose=False)
